@@ -1,9 +1,14 @@
 /**
- * @class ready
+ * @method ready
  * @public
  * @namespace cui
  */
-cui.ready = function( foo ){
+
+if(!cui.ready) {
+    
+ var _dom = function() { 
+
+     function _ready( foo ){
 
            var fns = [], fn, f = false, d = document,  
 
@@ -47,4 +52,12 @@ cui.ready = function( foo ){
                       loaded ? foo() : fns.push( foo ) 
 
                })(foo);
-};
+    };
+
+    return { ready: _ready }
+
+  }();
+
+  cui.ready = _dom.ready
+
+}//endif
