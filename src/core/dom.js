@@ -51,7 +51,7 @@ cui.dom = {
 
                var computed = document.defaultView.getComputedStyle(elem, '') 
 
-               value = computed[this.camelize(property)] 
+               value = computed[cui.lang.camelize(property)] 
 
              return elem.style[property] || value
         
@@ -119,12 +119,7 @@ cui.dom = {
 
                                    'innerHTML';
                          
-                          elem[method] = text
-    },
-
-    trim: function( s ) {
-
-          return String.prototype.trim ? s.trim() : s.replace(/(^\s*|\s*$)/g,'')    
+                          elem[ method ] = text
     },
 
     is: function( node ) {
@@ -132,13 +127,6 @@ cui.dom = {
         return node && node.nodeName && node.nodeType == 1
     },
 
-    camelize: function( s ) {
-
-        return s.replace(/-(.)/g, function(m,m1){
-
-               return m1.toUpperCase();
-        })  
-    },
 
     /**
      *  Adds the specified class(es) to each of the set of matched elements.
@@ -157,7 +145,7 @@ cui.dom = {
 
           } else {
 
-                   elem.className = this.trim(elem.className + ' ' + c)
+                   elem.className = cui.lang.trim(elem.className + ' ' + c)
           }
 
        return this
@@ -185,7 +173,7 @@ cui.dom = {
 
          } else {
 
-                   elem.className = this.trim(elem.className + ' ' + c)
+                   elem.className = cui.lang.trim(elem.className + ' ' + c)
          }
     },
 
