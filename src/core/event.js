@@ -1,80 +1,88 @@
 /**
- *
+ * The cui event facilities the creation of event-driven app in the browser.
+ * Provides a flexible method of binding/unbinding an event handler to one or more elements.
  */
 
-cui.event = {
+if( !cui.event ) {
 
-    bind: function(elem, evType, fn, useCapture) {
+     cui.event = function(){
 
-        if(elem.addEventListener) {
+         return {  
 
-              return elem.addEventListener(evType, fn, useCapture)
+           bind: function(elem, evType, fn, useCapture) {
+
+                  if(elem.addEventListener) {
+
+                    return elem.addEventListener(evType, fn, useCapture)
   
-           } else if(elem.attachEvent) {
+                  } else if(elem.attachEvent) {
  
-                  var _fn = function(){ fn.call(elem, window.event); }
+                        var _fn = function(){ fn.call(elem, window.event); }
 
-                  var r = elem.attachEvent('on'+evType, _fn)
+                        var r = elem.attachEvent('on'+evType, _fn)
 
-                  elem[fn.toString() + evType] = _fn
+                        elem[ fn.toString() + evType ] = _fn
    
-                  return r;
+                     return r;
 
-           } else {
+                  } else {
 
-                  elem['on'+evType] = fn
-           }    
-    },
+                     elem['on'+evType] = fn
+                  }    
+            },
 
-    unbind: function(elem,evType,fn,useCapture) {
+            unbind: function(elem,evType,fn,useCapture) {
 
-        if(elem.addEventListener) {
+                  if(elem.addEventListener) {
 
-           return elem.removeEventListener(evType, fn, useCapture)
+                     return elem.removeEventListener(evType, fn, useCapture)
 
-        } else if(elem.detachEvent) {
+                  } else if(elem.detachEvent) {
 
-           return elem.detachEvent('on'+evType, elem[fn.toString() + evType])
+                     return elem.detachEvent('on'+evType, elem[fn.toString() + evType])
 
-           elem[fn.toString() + evType] = null
+                     elem[ fn.toString() + evType ] = null
 
-        } else {
+                  } else {
 
-           elem['on'+evType] = function(){}
-        } 
-    },    
+                     elem[ 'on' + evType ] = function(){}
+                  } 
+            },    
 
-    stopPropagation: function( e ) {
+            stopPropagation: function( e ) {
 
-        if(window.event) {
+                  if(window.event) {
 
-           window.event.cancelBubble = true
+                     window.event.cancelBubble = true
 
-           window.event.returnValue = false 
-        }   
+                     window.event.returnValue = false 
+                  }   
 
-        if(e.preventDefault && e.stopPropagation) {
+                  if(e.preventDefault && e.stopPropagation) {
 
-           e.preventDefault()
+                     e.preventDefault()
 
-           e.stopPropagation()  
-        }
-    },
+                     e.stopPropagation()  
+                  }
+            },
 
-    getTarget: function( evt ) {
+            getTarget: function( evt ) {
 
-         var target = window.event ? window.event.srcElement : evt ? evt.target : null  
+                  var target = window.event ? window.event.srcElement : evt ? evt.target : null  
 
-         while(target.nodeType != 1 && target.nodeName.toLowerCase() != 'body') {
+                  while(target.nodeType != 1 && target.nodeName.toLowerCase() != 'body') {
 
-               target = target.parentNode
-         }  
+                        target = target.parentNode
+                  }  
  
-         if(!target) return false
+                  if( !target ) return false
 
-       return target;
-    }
-};
+                  return target;
+            }
+      };
+}()
+
+}//endif
 
 HTMLElement.prototype.Click = function( fn ) {
 
