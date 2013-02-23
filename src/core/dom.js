@@ -4,6 +4,8 @@
  * @namespace cui
  */
 
+if(!cui.dom)
+
 cui.dom = {
 
     selectAll: function( selector ) {
@@ -190,10 +192,25 @@ cui.dom = {
 };
 
 HTMLElement.prototype.html = function( content ) {
-            dom.html(this, content)
-}
 
-HTMLElement.prototype.css = function( styles ) {
+            cui.dom.html(this, content);
+};
 
-            dom.css(this, styles)
-}
+HTMLElement.prototype.css = function( content ) {
+
+            cui.dom.css(this, content)
+};
+
+Function.prototype.binding = function() {
+
+         var args = Array.prototype.slice.call(arguments),
+
+             object = args.shift(),
+
+             fn = this;
+
+         return function() {
+
+                return fn.apply(object,args.concat(Array.prototype.slice.call(arguments)))
+         } 
+};

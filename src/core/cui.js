@@ -71,7 +71,7 @@ cui.lang = cui.lang || {};
               */
              isBoolean: function( ob ) {
 
-                      return ob === 'boolean';
+                      return typeof ob === 'boolean';
              },
 
 
