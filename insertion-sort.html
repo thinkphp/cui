@@ -43,6 +43,11 @@ pre code {
 <script type="text/javascript" src="src/core/ready.js"></script>
 <script type="text/javascript" src="src/core/dom.js"></script>
 <script type="text/javascript" src="src/core/event.js"></script>
+<script type="text/javascript" src="src/core/cache.js"></script>
+<script type="text/javascript" src="src/core/CustomEvent.js"></script>
+<script type="text/javascript" src="src/core/template.js"></script>
+<script type="text/javascript" src="src/core/ajax.js"></script>
+<script type="text/javascript" src="src/core/yql.js"></script>
 <script type="text/javascript">
 
 var sorting = function() {
@@ -79,27 +84,39 @@ var sorting = function() {
 
 var arr = [9,8,7,6,5,4,3,2,1,0]
 
-var dom = cui.dom,
+;(function(dom, event, yql) {
 
-    event = cui.event,
- 
-    $ = function(id){ return dom.select(id); }
+    var $ = function( id ){ return dom.select(id);};
 
-cui.ready(function(){
+    cui.ready(function(){
 
-    var input = dom.select("#in"),
+    var input = $("#in"),
 
-        output = dom.select("#out");
+        output = $("#out");
 
         input.html(arr.join(", ")) 
 
-    $('#action').Click(function( event ){
+        $('#action').Click(function( event ){
 
-          output.html((sorting.insert( arr )).join(", ")) 
+          output.html((sorting.insert( arr )).join(", "))
+        })
+
+        var user = 'thinkphp';
+
+        var query = 'select * from rss where url="http://ws.audioscrobbler.com/1.0/user/'+ user +'/recenttracks.rss"';
+
+        yql(query, function( data ){
+
+               console.log( data )
+        })
+
 
     })
-})
+
+})(cui.dom, cui.event, cui.yql);
+
 console.log(cui)
+
 </script>
 </head>
 <body>
@@ -108,20 +125,6 @@ console.log(cui)
 <button id="action">Sorting!!!</button>
 <p>Output: <span id="out"></span></p>
 <pre><code>
-cui.ready(function(){
-
-    var input = dom.select("#in"),
-
-        output = dom.select("#out");
-
-        input.html(arr.join(", ")) 
-
-    $('#action').Click(function( event ){
-
-          output.html((sorting.insert( arr )).join(", ")) 
-
-    })
-})
 </code></pre>
 </body>
 </html>
