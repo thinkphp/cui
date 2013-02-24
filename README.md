@@ -1,20 +1,20 @@
 cui - Cuba User Interface Library
 ---------------------------------
 
-cuba.js in modules
+cuba.js in modules.
 
 Usage
 -----
 
-  var arr = [9,8,7,6,5,4,3,2,1,0]
+     var arr = [9,8,7,6,5,4,3,2,1,0]
 
-  ;(function(dom, event, yql) {
+     ;(function(dom, event, yql) {
 
-    var $ = function( id ){ return dom.select(id);};
+     var $ = function( id ){ return dom.select(id);};
 
-    cui.ready(function(){
-
-    var input = $("#in"),
+     cui.ready(function(){
+  
+        var input = $("#in"),
 
         output = $("#out");
 
@@ -33,6 +33,6 @@ Usage
 
                console.log( data )
         })
-    })
+      })
 
-   })(cui.dom, cui.event, cui.yql);
+     })(cui.dom, cui.event, cui.yql);
