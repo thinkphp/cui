@@ -88,3 +88,8 @@ HTMLElement.prototype.Click = function( fn ) {
 
        cui.event.bind(this, 'click', fn, false)
 } 
+
+HTMLElement.prototype.Submit = function( fn ) {
+
+       cui.event.bind(this, 'submit', fn, false)
+} 
