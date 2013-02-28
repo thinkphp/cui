@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+   <title>Google Search based on cui.jsonp and cui.router</title>
+   <link rel="stylesheet" href="http://yui.yahooapis.com/2.8.0r4/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+   <link rel="stylesheet" href="http://yui.yahooapis.com/2.7.0/build/base/base.css" type="text/css">
+   <link rel="stylesheet" href="search.css" type="text/css">
+</head>
+<body class="yui-skin-sam">
+<div id="doc2" class="yui-t7">
+   <div id="hd" role="banner"><h1>Google Search using cui.router and script loader</h1></div>
+   <div id="bd" role="main">
+	<div class="yui-g">
+
+           <form action="http://www.google.com/search" id="googleform">
+             <div>
+                <label for="q">Google Search:</label>
+                <input class="gsc-input" type="text" id="q" name="q" placeholder="enter a term" required/> 
+                <input class="gsc-search-button" type="submit" id="send" name="send" value="Go!"/> 
+             </div> 
+           </form>
+	</div>
+           <div id="results"></div>
+	</div>
+   <div id="ft" role="contentinfo"><p>&copy; 2013 Some Rights Reserved | created by  @<a href="http://twitter.com/thinkphp">thinkphp</a> | Download on <a href="http://github.com/thinkphp/cui">GitHub </a></p></div>
+</div>
+<script type="text/javascript" src="use-min.js"></script>
+<script type="text/javascript">
+
+use.path("../src/core/")
+
+use(["cui","dom","event","jsonp","router"], function(){
+
+     //dom is available and ready to use
+     var dom = cui.dom, 
+
+     //event is available and ready to use
+      event = cui.event,
+
+      jsonp = cui.jsonp,
+
+      app = cui.router;
+
+var googlesearch = function(){
+
+      /* defines the vars*/
+      //for google form
+      var f, 
+
+          //for div container
+          resultscontainer, 
+
+          //for button
+          send, 
+
+          //var for textfield
+          q;
+
+      //@public init function
+      function init() {
+
+          //get the form element
+          f    = dom.select("#googleform"),
+
+          //get the button element
+          send = dom.select('#send'),
+
+          //get the input text element
+          q    = dom.select('#q'),
+
+          //get the div result
+          resultscontainer = dom.select('#results');
+
+          //if all exist then attach the handler for event submit
+          if(f && resultscontainer && send && q) {
+
+                  //bind the handler to the event submit
+                    dom.select('#googleform').Submit(function( event ){
+
+                              googlesearch.get( event )
+                    }) 
+          }      
+      }
+
+      //handler for submit event
+      function get( evt ) {
+
+          //stop propagation
+          event.stopPropagation( evt )
+
+          //change attribute with loading
+          dom.select('#send').attr('value','Loading...')            
+
+          //change window location hash
+          window.location = "#/search/" + q.value;
+      };
+
+      return {init: init, get: get};
+  }();
+
+  //call init function
+  googlesearch.init();
+
+  // define a var f that holds the handler function 
+  // and fires when location hash is changed.
+  var f;
+
+
+  //router defined
+  app.get("/search/:what", f = function( data ){
+
+          //assemble the URL for REST GET request
+          var url = 'http://ajax.googleapis.com/ajax/services/search/web?gl=en'+
+                    '&userip=&'+
+                    'hl=en&'+
+                    'v=1.0&'+
+                    'start=0&'+
+                    'rsz=8&'+
+                    'q='+data.what;
+
+          //make a JSONP request
+          jsonp(url, function( o ){
+ 
+               //grab the data from server
+               if(window.console) console.log( o )
+     
+               //change the attribute 'value' for the button search
+               dom.select('#send').attr('value','Go!')
+
+               //change the attr value for the textfield input
+               dom.select('#q').attr("value", data.what) 
+
+               //declare a val with '' value
+               var output = '';
+
+               //if resposenstatus is ok then
+               if(o.responseStatus == 200) {
+                 
+                 //define a var 
+                 var out = '',
+
+                     //grab the results from object received
+                     results = o.responseData.results;
+
+                 //if the results are not undefined and are object then
+                 if(undefined !== results && typeof results === 'object') {
+
+                     //get the length of the results
+                     var all = results.length;
+
+                     //append a h3 
+                     out += '<h3>Web Results</h3><ol>';
+
+                     //loop through all the results and assemble the result
+                     for(var i=0;i<all;i++) {
+
+                         out += '<li><h4><a href="' + results[i].url + '">' + results[i].title + '</a></h4>' + 
+
+                                '<p>' + results[i].content +  '<span>(' + results[i].url + ')</span></p>';
+                      }  
+
+                      out += '</ol>';
+                  }  
+
+                  //final output
+                  output = '<h2>Results</h2><div>' + out + '</div>'; 
+
+                //otherwise error
+                } else {
+
+                out = '<div class="error"><h2>Error</h2>' +
+
+                      '<p>'+ o.responseDetails +'</p>' +
+
+                      '</div>';
+                }
+
+                //append the container result into the div reserved for results
+                dom.select("#results").html( out )
+          })
+  })
+
+//run the router
+app.run(); 
+
+
+if(window.location.hash.indexOf("/search") != -1) {
+
+   var _val = location.hash.split("/")[2]
+
+   dom.select("#q").attr("value", _val);
+
+   f({what: _val});
+}
+
+});//enduse
+
+</script>
+</body>
+</html>
