@@ -201,6 +201,11 @@ HTMLElement.prototype.css = function( content ) {
             cui.dom.css(this, content)
 };
 
+HTMLElement.prototype.attr = function( a, v ) {
+
+            cui.dom.attr(this, a, v )
+};
+
 Function.prototype.binding = function() {
 
          var args = Array.prototype.slice.call(arguments),
