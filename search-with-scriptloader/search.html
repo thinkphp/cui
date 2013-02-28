@@ -7,7 +7,7 @@
    <link rel="stylesheet" href="search.css" type="text/css">
 </head>
 <body class="yui-skin-sam">
-<div id="doc" class="yui-t7">
+<div id="doc2" class="yui-t7">
    <div id="hd" role="banner"><h1>Google Search using scriptloader and CUI micro-framework</h1></div>
    <div id="bd" role="main">
 	<div class="yui-g">
@@ -15,14 +15,12 @@
            <form action="http://www.google.com/search" id="googleform">
              <div>
                 <label for="q">Google Search:</label>
-                <input type="text" id="q" name="q" placeholder="enter a term" required/> 
-                <input type="submit" id="send" name="send" value="Go!"/> 
+                <input class="gsc-input" type="text" id="q" name="q" placeholder="enter a term" required/> 
+                <input class="gsc-search-button" type="submit" id="send" name="send" value="Go!"/> 
              </div> 
            </form>
-
-           <div id="results"></div>
-
 	</div>
+           <div id="results"></div>
 	</div>
    <div id="ft" role="contentinfo"><p>&copy; 2013 Some Rights Reserved | created by  @<a href="http://twitter.com/thinkphp">thinkphp</a> | Download on <a href="http://github.com/thinkphp/cui">GitHub </a></p></div>
 </div>
