@@ -93,3 +93,8 @@ HTMLElement.prototype.Submit = function( fn ) {
 
        cui.event.bind(this, 'submit', fn, false)
 } 
+
+HTMLElement.prototype.Keydown = function( fn ) {
+
+       cui.event.bind(this, 'keydown', fn, false)
+};
