@@ -6,6 +6,8 @@ cuba.js in modules.
 Usage
 -----
 
+```js
+
      var arr = [9,8,7,6,5,4,3,2,1,0]
 
      ;(function(dom, event, yql) {
@@ -36,3 +38,4 @@ Usage
       })
 
      })(cui.dom, cui.event, cui.yql);
+```
