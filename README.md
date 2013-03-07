@@ -53,6 +53,10 @@ var arr = [9,8,7,6,5,4,3,2,1,0]
 
 ```
 
+```html
+       <label for="tags">Select a programming language</label></td><td><input type="text" id="tags" />
+```
+
 ```js
 
 var dom = cui.dom,
