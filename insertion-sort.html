@@ -84,13 +84,13 @@ var sorting = function() {
 
 var arr = [9,8,7,6,5,4,3,2,1,0]
 
-;(function(dom, event, yql) {
+;(function(ready, dom, event, yql) {
 
     var $ = function( id ){ return dom.select(id);};
 
-    cui.ready(function(){
+    ready(function(){
 
-    var input = $("#in"),
+        var input = $("#in"),
 
         output = $("#out");
 
@@ -98,7 +98,7 @@ var arr = [9,8,7,6,5,4,3,2,1,0]
 
         $('#action').Click(function( event ){
 
-          output.html((sorting.insert( arr )).join(", "))
+           output.html( ( sorting.insert( arr )).join(", ") )
         })
 
         var user = 'thinkphp';
@@ -109,11 +109,9 @@ var arr = [9,8,7,6,5,4,3,2,1,0]
 
                console.log( data )
         })
-
-
     })
 
-})(cui.dom, cui.event, cui.yql);
+})(cui.ready, cui.dom, cui.event, cui.yql);
 
 console.log(cui)
 
