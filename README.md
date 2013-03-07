@@ -127,3 +127,7 @@ ready(function(){
 })
 
 ```
+
+## License
+
+  MIT
