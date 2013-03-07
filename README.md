@@ -128,6 +128,12 @@ ready(function(){
 
 ```
 
+DEMOS
+-----
+
+   * [http://thinkphp.ro/apps/js-hacks/cui/](http://thinkphp.ro/apps/js-hacks/cui/)
+
+
 ## License
 
   MIT
