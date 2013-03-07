@@ -3,7 +3,7 @@ cui - Cuba User Interface Library
 
 cuba.js in modules.
 
-1#Example:
+Example#1:
 ---------
 
 ```js
@@ -41,7 +41,7 @@ var arr = [9,8,7,6,5,4,3,2,1,0]
 
 ```
 
-2#Example
+Example#2
 ----------
 
 ```html
@@ -90,7 +90,7 @@ var dom = cui.dom,
       suggest = Autosuggest( dom.select('#tags'), tags);
 ```
 
-3#Example
+Example#3
 ---------
 
 ```html
